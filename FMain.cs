@@ -34,6 +34,8 @@ namespace Kurganskiy_as_game
             FGm.Width = 800;
             FGm.Height = 600;
             Game.Init(FGm);
+            Game.Load();
+            Game.Draw();
             FGm.ShowDialog();
         }
 
