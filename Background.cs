@@ -31,5 +31,9 @@ namespace Kurganskiy_as_game
         {
             Game.Buffer.Graphics.DrawImage(img, 0, 0, Game.Width, Game.Height);
         }
+        public override void Update()
+        {
+            
+        }
     }
 }

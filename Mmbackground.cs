@@ -27,5 +27,9 @@ namespace Kurganskiy_as_game
         {
             SplashScreen.Buffer.Graphics.DrawImage(img, 0, 0, SplashScreen.Width, SplashScreen.Height);
         }
+        public override void Update()
+        {
+            
+        }
     }
 }

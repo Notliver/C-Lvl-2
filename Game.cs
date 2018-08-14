@@ -14,6 +14,8 @@ namespace Kurganskiy_as_game
         public static int Height { get; set; }
 
         public static BaseObject[] _objs;
+        public static Bullet _bullet;
+        public static Asteroid[] _asteroids;
 
         public static Random rnd = new Random();
         static Background background = new Background();
@@ -55,15 +57,35 @@ namespace Kurganskiy_as_game
 
         public static void Load()
         {
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+            _asteroids = new Asteroid[30];
             Star star = new Star();
-            _objs = new BaseObject[30];
+            _objs = new BaseObject[1];
             for (int i = 0; i < _objs.Length; i++)
             {
                 int size = star.GetRandomSize();
                 _objs[i] = new Star(new Point(800, rnd.Next(0, 600)), new Point(star.GetSpeed(size), 0), new Size(size, size));
             }
+            for ( var i = 0; i<_asteroids.Length; i++)
+            {
+                int r = rnd.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
+            }
         }
-        
+        private static void CheckCollisions()
+        {
+            foreach (Asteroid asteroid in _asteroids)
+                if (
+                    _bullet.GetPos().Y >= asteroid.GetPos().Y &&
+                    _bullet.GetPos().Y < asteroid.GetPos().Y + asteroid.GetSize().Height &&
+                    _bullet.GetPos().X >= asteroid.GetPos().X)
+                {
+                    _bullet.Collided = true;
+                    asteroid.Collided = true;
+                }
+        }
+
+
         public static void Draw()
         {
             //Очищаем экран
@@ -73,6 +95,12 @@ namespace Kurganskiy_as_game
             //РИсуем объекты
             foreach (BaseObject obj in _objs)
                 obj.Draw();
+            foreach (Asteroid a in _asteroids)
+                a.Draw();
+            _bullet.Draw();
+            
+            //При закрытии окна игры выкидывает ошибку. Не понимаю как убрать.
+            //Можно обработать исключениями.
             Buffer.Render();
         }
 
@@ -80,6 +108,10 @@ namespace Kurganskiy_as_game
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+            foreach (Asteroid a in _asteroids)
+                a.Update();
+            _bullet.Update();
+            CheckCollisions();
         }
     }
 }
