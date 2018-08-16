@@ -55,3 +55,4 @@ C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.pdb
 C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Karemma_starship.png
 C:\Учеба\C-Lvl-2\bin\Debug\Pictures\415851_9eb91.png
 C:\Учеба\C-Lvl-2\bin\Debug\Pictures\large_star.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\blue_cross_round_symbol.png

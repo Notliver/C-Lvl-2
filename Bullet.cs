@@ -41,7 +41,7 @@ namespace Kurganskiy_as_game
                 Collided = false;
             }
 
-            Pos.X = Pos.X + 5;
+            Pos.X = Pos.X + 10;
 
         }
     }

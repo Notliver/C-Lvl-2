@@ -17,6 +17,7 @@ namespace Kurganskiy_as_game
         public static BaseObject[] _objs;
         private static List<Bullet> _bullets = new List<Bullet>();
         public static Asteroid[] _asteroids;
+        public static AidKit _aidKit;
 
         public static Random rnd = new Random();
         static Background background = new Background();
@@ -72,6 +73,8 @@ namespace Kurganskiy_as_game
             _asteroids = new Asteroid[30];
             Star star = new Star();
             _objs = new BaseObject[20];
+            int r_aid = rnd.Next(5, 50);
+            _aidKit = new AidKit(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_aid / 5, r_aid), new Size(r_aid, r_aid));
             for (int i = 0; i < _objs.Length; i++)
             {
                 int size = star.GetRandomSize();
@@ -82,6 +85,7 @@ namespace Kurganskiy_as_game
                 int r = rnd.Next(5, 50);
                 _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
             }
+
         }
 
 
@@ -100,8 +104,7 @@ namespace Kurganskiy_as_game
             _ship?.Draw();
             if (_ship != null)
                 Buffer.Graphics.DrawString("Energy:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
-
-
+            _aidKit?.Draw();
             //При закрытии окна игры выкидывает ошибку. Не понимаю как убрать.
             //Можно обработать исключениями.
             Buffer.Render();
@@ -109,25 +112,36 @@ namespace Kurganskiy_as_game
 
         public static void Update()
         {
-            foreach (BaseObject obj in _objs)
-                obj.Update();
+            foreach (BaseObject obj in _objs) obj.Update();
             foreach(Bullet b in _bullets) b.Update();
             for (var i = 0; i < _asteroids.Length; i++)
             {
                 if (_asteroids[i] == null) continue;
                 _asteroids[i].Update();
-                for (int j=0; j<_bullets.Count; j++)
+                for (int j = 0; j < _bullets.Count; j++)
+                {
+                    if (_bullets[j].Rect.X > Game.Width)
+                    {
+                        _bullets.RemoveAt(j--);
+                        continue;
+                    }
                     if (_bullets != null && _bullets[j].Collision(_asteroids[i]))
                     {
-                    System.Media.SystemSounds.Hand.Play();
-                    _asteroids[i] = null;
-                    _bullets.RemoveAt(j);
-                    j--;
+                        System.Media.SystemSounds.Hand.Play();
+                        _asteroids[i] = null;
+                        _bullets.RemoveAt(j);
+                        j--;
                     }
+                    if (_bullets != null && _bullets[j].Collision(_aidKit))
+                        System.Media.SystemSounds.Beep.Play();
+                }
                 if (_asteroids[i] == null || !_ship.Collision(_asteroids[i])) continue;
                 _ship?.EnergyLow(rnd.Next(0, 10));
                 System.Media.SystemSounds.Asterisk.Play();
                 if (_ship.Energy <= 0) _ship?.Die();
+                if (_aidKit == null || !_ship.Collision(_aidKit)) continue;
+                _ship?.EnergyGain(rnd.Next(0, 10));
+
             }
         }
 
