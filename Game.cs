@@ -19,14 +19,14 @@ namespace Kurganskiy_as_game
         private static int _maxBullets = 30;
         private static List<Bullet> _bullets = new List<Bullet>();
 
-        private static int _maxAsteroids = 12;
+        private static int _maxAsteroids = 1;
         private static List<Asteroid> _asteroids = new List<Asteroid>();
-
-        public static AidKit _aidKit;
 
         public static Random rnd = new Random();
         static Background background = new Background();
         public static Timer timer = new Timer();
+
+        private static int _score;
 
         static Game()
         {
@@ -76,10 +76,9 @@ namespace Kurganskiy_as_game
         public static void Load()
         {
             Star star = new Star();
-            _objs = new BaseObject[20];
+            _objs = new BaseObject[30];
             AddAsteroid();
             int r_aid = rnd.Next(5, 50);
-            _aidKit = new AidKit(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_aid / 5, r_aid), new Size(r_aid, r_aid));
             for (int i = 0; i < _objs.Length; i++)
             {
                 int size = star.GetRandomSize();
@@ -95,15 +94,13 @@ namespace Kurganskiy_as_game
             //Рисуем заного заставку
             background.Draw();
             //РИсуем объекты
-            foreach (BaseObject obj in _objs)
-                obj.Draw();
-            foreach (Asteroid a in _asteroids)
-                a?.Draw();
+            foreach (BaseObject obj in _objs) obj.Draw();
+            foreach (Asteroid a in _asteroids) a?.Draw();
             foreach (Bullet b in _bullets) b.Draw();
             _ship?.Draw();
             if (_ship != null)
                 Buffer.Graphics.DrawString("Energy:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
-            _aidKit?.Draw();
+                Buffer.Graphics.DrawString("Score:" + _score, SystemFonts.DefaultFont, Brushes.White, 0, 20);
             //При закрытии окна игры выкидывает ошибку. Не понимаю как убрать.
             //Можно обработать исключениями.
             Buffer.Render();
@@ -143,7 +140,10 @@ namespace Kurganskiy_as_game
                 System.Media.SystemSounds.Asterisk.Play();
                 
                 if (_ship.Energy <= 0) _ship?.Die();
- 
+            }
+            if (_asteroids.Count <= 0)
+            {
+                AddAsteroid();
             }
         }
         private static void AddAsteroid()
@@ -158,9 +158,9 @@ namespace Kurganskiy_as_game
 
                 if (j % 10 == 0)
                 
-                    _asteroids.Add(new AidKit(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
+                    _asteroids.Add(new AidKit(new Point(1000, rnd.Next(10, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
                 else
-                    _asteroids.Add(new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
+                    _asteroids.Add(new Asteroid(new Point(1000, rnd.Next(10, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
                 
             }
         }

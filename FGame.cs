@@ -20,7 +20,8 @@ namespace Kurganskiy_as_game
 
         private void FGame_Load(object sender, EventArgs e)
         {
-
+           
+                                                                                                    
         }
     }
 }
