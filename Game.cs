@@ -130,6 +130,9 @@ namespace Kurganskiy_as_game
                     if (_bullets[j].Collision(_asteroids[i]))
                     {
                         System.Media.SystemSounds.Hand.Play();
+                        if (_asteroids[i] is AidKit && (_asteroids[i].Rect.X <= 0))
+                            _score -= _asteroids[i].Power;
+                        else _score += _asteroids[i].Power;
                         _asteroids.RemoveAt(i--);
                         _bullets.RemoveAt(j--);
                         break;
@@ -138,6 +141,8 @@ namespace Kurganskiy_as_game
                 if (i<0 || !_ship.Collision(_asteroids[i])) continue;
                 _ship?.EnergyLow(_asteroids[i].Power * rnd.Next(0, 10));
                 System.Media.SystemSounds.Asterisk.Play();
+                _asteroids.RemoveAt(i--);
+                _score = -_asteroids[i].Power;
                 
                 if (_ship.Energy <= 0) _ship?.Die();
             }
