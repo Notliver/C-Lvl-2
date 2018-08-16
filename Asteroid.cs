@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Kurganskiy_as_game
 {
-    class Asteroid : BaseObject , ICloneable
+    class Asteroid : BaseObject , ICloneable, IComparable<Asteroid> 
     {
-        public int Power { get; set; }
+        public int Power { get; set; } = 3;
 
         public bool Collided { get; set; }
+    
+   
       
 
         public Point GetPos()
@@ -59,6 +61,17 @@ namespace Kurganskiy_as_game
                 Pos.X = Game.Width + Size.Width;
                 Pos.Y = Game.rnd.Next(0, 600);
             }
+            
+        }
+
+        int IComparable<Asteroid>.CompareTo(Asteroid obj)
+        {
+            if (Power > obj.Power)
+                return 1;
+            if (Power < obj.Power)
+                return -1;
+            return 0;
+
         }
     }
 }

@@ -25,3 +25,33 @@ C:\Учеба\Урок 1\Kurganskiy_AS_game\obj\Debug\Kurganskiy_AS_game.csproj.
 C:\Учеба\Урок 1\Kurganskiy_AS_game\obj\Debug\Kurganskiy_AS_game.csproj.CoreCompileInputs.cache
 C:\Учеба\Урок 1\Kurganskiy_AS_game\obj\Debug\Kurganskiy_as_game.exe
 C:\Учеба\Урок 1\Kurganskiy_AS_game\obj\Debug\Kurganskiy_as_game.pdb
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\asteroid 03.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\background01.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\background02.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\background03.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 01.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 02.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 03.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 04.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 05.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Planet 06.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Shenzhou_front_white_shadow.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\wreck.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\wreck1.png
+C:\Учеба\C-Lvl-2\bin\Debug\Resources\r-type-cawdvr0wiaavgqf.jpg
+C:\Учеба\C-Lvl-2\bin\Debug\Resources\595_512.png
+C:\Учеба\C-Lvl-2\bin\Debug\Kurganskiy_as_game.exe.config
+C:\Учеба\C-Lvl-2\bin\Debug\Kurganskiy_as_game.exe
+C:\Учеба\C-Lvl-2\bin\Debug\Kurganskiy_as_game.pdb
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_AS_game.csprojAssemblyReference.cache
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.FGame.resources
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.FMain.resources
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.FTopPlrs.resources
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.Properties.Resources.resources
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_AS_game.csproj.GenerateResource.cache
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_AS_game.csproj.CoreCompileInputs.cache
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.exe
+C:\Учеба\C-Lvl-2\obj\Debug\Kurganskiy_as_game.pdb
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\Karemma_starship.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\415851_9eb91.png
+C:\Учеба\C-Lvl-2\bin\Debug\Pictures\large_star.png
