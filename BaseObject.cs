@@ -12,6 +12,10 @@ namespace Kurganskiy_as_game
 
         public Rectangle Rect => new Rectangle(Pos, Size);
 
+        public delegate void Message();
+
+        
+
         //Создали массив с объектами и задали им величину и позицию
 
 

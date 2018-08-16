@@ -44,7 +44,5 @@ namespace Kurganskiy_as_game
             Pos.X = Pos.X + 5;
 
         }
-
-
     }
 }

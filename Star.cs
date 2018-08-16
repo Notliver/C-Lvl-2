@@ -5,16 +5,21 @@ namespace Kurganskiy_as_game
 {
     class Star : BaseObject
     {
-        Image img = Image.FromFile("Pictures\\asteroid 03.png");
+        private Image[] imgs =
+        {
+            Image.FromFile("Pictures\\415851_9eb91.png"),
+            Image.FromFile("Pictures\\large_star.png"),
+        };
+        
 
         public Star() : base(new Point(0, 0), new Point(0, 0), new Size(0, 0))
         {
-            Game.Buffer.Graphics.DrawImage(img, Pos);
+            Game.Buffer.Graphics.DrawImage(imgs[Game.rnd.Next(0,1)], Pos);
         }
 
         public Star(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-            Game.Buffer.Graphics.DrawImage(img, pos);
+            Game.Buffer.Graphics.DrawImage(imgs[Game.rnd.Next(0, 1)], pos);
         }
 
         //Присваиваем размер звезде
@@ -49,7 +54,7 @@ namespace Kurganskiy_as_game
         //Рисуем присвоенную картинку. Без этого пункта будут кружки.
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(img, Pos);
+            Game.Buffer.Graphics.DrawImage(imgs[Game.rnd.Next(0, 1)], Pos);
         }
 
         public override void Update()

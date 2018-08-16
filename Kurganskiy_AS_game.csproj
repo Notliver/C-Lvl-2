@@ -52,6 +52,7 @@
     <Compile Include="ICollision.cs" />
     <Compile Include="MainObject.cs" />
     <Compile Include="Mmbackground.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="FGame.cs">
       <SubType>Form</SubType>
@@ -106,6 +107,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pictures\415851_9eb91.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pictures\asteroid 03.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -116,6 +120,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pictures\background03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\Karemma_starship.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pictures\large_star.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Pictures\Planet 01.png">
