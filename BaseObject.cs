@@ -28,17 +28,7 @@ namespace Kurganskiy_as_game
 
         public abstract void Draw();
 
-
         public abstract void Update();
-        //{
-        //    Pos.X = Pos.X + Dir.X;
-        //    Pos.Y = Pos.Y + Dir.Y;
-        //    if (Pos.X < 0) Dir.X = -Dir.X;
-        //    if (Pos.X > Game.Width) Dir.X = -Dir.X;
-        //    if (Pos.Y < 0) Dir.Y = -Dir.Y;
-        //    if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
-        //}
-
 
         public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
 

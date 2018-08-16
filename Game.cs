@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace Kurganskiy_as_game
 {
@@ -14,7 +15,7 @@ namespace Kurganskiy_as_game
         public static int Height { get; set; }
 
         public static BaseObject[] _objs;
-        public static Bullet _bullet;
+        private static List<Bullet> _bullets = new List<Bullet>();
         public static Asteroid[] _asteroids;
 
         public static Random rnd = new Random();
@@ -28,7 +29,7 @@ namespace Kurganskiy_as_game
 
         private static void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(20, 10));
+            if (e.KeyCode == Keys.ControlKey) _bullets.Add(new Bullet(new Point(_ship.Rect.X + 10, _ship.Rect.Y + 4), new Point(4, 0), new Size(20, 10)));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
             if (e.KeyCode == Keys.Escape) Game.Finish();
@@ -68,7 +69,6 @@ namespace Kurganskiy_as_game
 
         public static void Load()
         {
-            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
             _asteroids = new Asteroid[30];
             Star star = new Star();
             _objs = new BaseObject[20];
@@ -83,18 +83,6 @@ namespace Kurganskiy_as_game
                 _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
             }
         }
-        //private static void CheckCollisions()
-        //{
-        //    foreach (Asteroid asteroid in _asteroids)
-        //        if (
-        //            _bullet.GetPos().Y >= asteroid.GetPos().Y &&
-        //            _bullet.GetPos().Y < asteroid.GetPos().Y + asteroid.GetSize().Height &&
-        //            _bullet.GetPos().X >= asteroid.GetPos().X)
-        //        {
-        //            _bullet.Collided = true;
-        //            asteroid.Collided = true;
-        //        }
-        //}
 
 
         public static void Draw()
@@ -108,7 +96,7 @@ namespace Kurganskiy_as_game
                 obj.Draw();
             foreach (Asteroid a in _asteroids)
                 a?.Draw();
-            _bullet?.Draw();
+            foreach (Bullet b in _bullets) b.Draw();
             _ship?.Draw();
             if (_ship != null)
                 Buffer.Graphics.DrawString("Energy:" + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
@@ -123,24 +111,24 @@ namespace Kurganskiy_as_game
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
-            _bullet?.Update();
+            foreach(Bullet b in _bullets) b.Update();
             for (var i = 0; i < _asteroids.Length; i++)
             {
                 if (_asteroids[i] == null) continue;
                 _asteroids[i].Update();
-                if (_bullet != null && _bullet.Collision(_asteroids[i]))
-                {
+                for (int j=0; j<_bullets.Count; j++)
+                    if (_bullets != null && _bullets[j].Collision(_asteroids[i]))
+                    {
                     System.Media.SystemSounds.Hand.Play();
                     _asteroids[i] = null;
-                    _bullet = null;
-                    continue;
-                }
-                if (!_ship.Collision(_asteroids[i])) continue;
+                    _bullets.RemoveAt(j);
+                    j--;
+                    }
+                if (_asteroids[i] == null || !_ship.Collision(_asteroids[i])) continue;
                 _ship?.EnergyLow(rnd.Next(0, 10));
                 System.Media.SystemSounds.Asterisk.Play();
                 if (_ship.Energy <= 0) _ship?.Die();
             }
-            //CheckCollisions();
         }
 
         public static void Finish()
