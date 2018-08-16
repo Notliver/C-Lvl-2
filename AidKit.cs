@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace Kurganskiy_as_game
 {
-    class AidKit : BaseObject, IComparable<AidKit>
+    class AidKit : Asteroid
 
     {
-        public int Power { get; set; }
-        public bool Collided { get; set; }
-
         Image img = Image.FromFile("Pictures\\blue_cross_round_symbol.png");
 
 
@@ -41,15 +38,6 @@ namespace Kurganskiy_as_game
                 Pos.X = Game.Width + Size.Width;
                 Pos.Y = Game.rnd.Next(0, 600);
             }
-        }
-        int IComparable<AidKit>.CompareTo(AidKit obj)
-        {
-            if (Power > obj.Power)
-                return 1;
-            if (Power < obj.Power)
-                return -1;
-            return 0;
-
         }
     }
 }

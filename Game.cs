@@ -15,8 +15,13 @@ namespace Kurganskiy_as_game
         public static int Height { get; set; }
 
         public static BaseObject[] _objs;
+
+        private static int _maxBullets = 30;
         private static List<Bullet> _bullets = new List<Bullet>();
-        public static Asteroid[] _asteroids;
+
+        private static int _maxAsteroids = 12;
+        private static List<Asteroid> _asteroids = new List<Asteroid>();
+
         public static AidKit _aidKit;
 
         public static Random rnd = new Random();
@@ -70,9 +75,9 @@ namespace Kurganskiy_as_game
 
         public static void Load()
         {
-            _asteroids = new Asteroid[30];
             Star star = new Star();
             _objs = new BaseObject[20];
+            AddAsteroid();
             int r_aid = rnd.Next(5, 50);
             _aidKit = new AidKit(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_aid / 5, r_aid), new Size(r_aid, r_aid));
             for (int i = 0; i < _objs.Length; i++)
@@ -80,12 +85,6 @@ namespace Kurganskiy_as_game
                 int size = star.GetRandomSize();
                 _objs[i] = new Star(new Point(800, rnd.Next(0, 600)), new Point(star.GetSpeed(size), 0), new Size(size, size));
             }
-            for (var i = 0; i < _asteroids.Length; i++)
-            {
-                int r = rnd.Next(5, 50);
-                _asteroids[i] = new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r / 5, r), new Size(r, r));
-            }
-
         }
 
 
@@ -113,11 +112,16 @@ namespace Kurganskiy_as_game
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
-            foreach(Bullet b in _bullets) b.Update();
-            for (var i = 0; i < _asteroids.Length; i++)
+            foreach (Bullet b in _bullets) b.Update();
+            for (var i = 0; i < _asteroids.Count; i++)
             {
-                if (_asteroids[i] == null) continue;
+                if (_asteroids[i] == null || (_asteroids[i] is AidKit && _asteroids[i].Rect.X < 0))
+                {
+                    _asteroids.RemoveAt(i--);
+                    continue;
+                }
                 _asteroids[i].Update();
+
                 for (int j = 0; j < _bullets.Count; j++)
                 {
                     if (_bullets[j].Rect.X > Game.Width)
@@ -125,23 +129,39 @@ namespace Kurganskiy_as_game
                         _bullets.RemoveAt(j--);
                         continue;
                     }
-                    if (_bullets != null && _bullets[j].Collision(_asteroids[i]))
+
+                    if (_bullets[j].Collision(_asteroids[i]))
                     {
                         System.Media.SystemSounds.Hand.Play();
-                        _asteroids[i] = null;
-                        _bullets.RemoveAt(j);
-                        j--;
+                        _asteroids.RemoveAt(i--);
+                        _bullets.RemoveAt(j--);
+                        break;
                     }
-                    if (_bullets != null && _bullets[j].Collision(_aidKit))
-                        System.Media.SystemSounds.Beep.Play();
                 }
-                if (_asteroids[i] == null || !_ship.Collision(_asteroids[i])) continue;
-                _ship?.EnergyLow(rnd.Next(0, 10));
+                if (i<0 || !_ship.Collision(_asteroids[i])) continue;
+                _ship?.EnergyLow(_asteroids[i].Power * rnd.Next(0, 10));
                 System.Media.SystemSounds.Asterisk.Play();
+                
                 if (_ship.Energy <= 0) _ship?.Die();
-                if (_aidKit == null || !_ship.Collision(_aidKit)) continue;
-                _ship?.EnergyGain(rnd.Next(0, 10));
+ 
+            }
+        }
+        private static void AddAsteroid()
+        {
+            AddAsteroid(_maxAsteroids++);
+        }
+        private static void AddAsteroid(int count)
+        {
+            for (int j=0; j<count; j++)
+            {
+                int r_asteroid = rnd.Next(5, 50);
 
+                if (j % 10 == 0)
+                
+                    _asteroids.Add(new AidKit(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
+                else
+                    _asteroids.Add(new Asteroid(new Point(1000, rnd.Next(0, Game.Height)), new Point(-r_asteroid / 5, r_asteroid), new Size(r_asteroid, r_asteroid)));
+                
             }
         }
 

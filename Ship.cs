@@ -24,10 +24,6 @@ namespace Kurganskiy_as_game
             _energy -= n;
         }
 
-        public void EnergyGain(int n)
-        {
-            _energy += n;
-        }
 
         public void GetScore()
         {
